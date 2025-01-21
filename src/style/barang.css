@@ -1,0 +1,160 @@
+/* Container utama */
+.data-container {
+  max-width: 1200px; /* Membuat container lebih lebar */
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fdfdfd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabel data */
+.data-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  text-align: left;
+  background-color: #fff;
+  font-size: 18px; /* Meningkatkan ukuran font untuk kesan lebih besar */
+}
+
+.data-table th,
+.data-table td {
+  padding: 20px 25px; /* Meningkatkan padding untuk ruang lebih */
+  border: 1px solid #ddd;
+}
+
+.data-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: bold;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Menggunakan warna latar belakang yang lebih terang */
+}
+
+.data-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Tombol tambah data */
+.btn-add {
+  display: inline-block;
+  padding: 12px 20px;
+  margin-bottom: 30px; /* Menambah jarak bawah tombol */
+  font-size: 18px; /* Menambah ukuran font */
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: #28a745;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+  background-color: #218838;
+}
+
+/* Filter menu */
+.filter-menu {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.filter-menu button {
+  margin: 0 15px;
+  padding: 12px 25px; /* Meningkatkan padding untuk tombol filter */
+  font-size: 16px; /* Menambah ukuran font tombol filter */
+  font-weight: bold;
+  color: #007bff;
+  background-color: #fff;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-menu button.active,
+.filter-menu button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Tombol aksi */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.action-buttons a,
+.action-buttons button {
+  padding: 8px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background-color: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+}
+
+.btn-edit:hover {
+  background-color: #e0a800;
+  color: #fff;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+  border: 1px solid #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+.btn-detail {
+  background-color: #17a2b8;
+  color: #fff;
+  border: 1px solid #17a2b8;
+}
+
+.btn-detail:hover {
+  background-color: #138496;
+}
+
+.filter-menu {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.filter-select {
+  padding: 12px 25px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 200px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.filter-select option {
+  padding: 10px;
+}
+

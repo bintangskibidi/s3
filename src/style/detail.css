@@ -1,0 +1,79 @@
+/* Menambah lebar maksimal pada container */
+.detail-container {
+  padding: 40px;
+  max-width: 1200px; /* Lebar maksimal lebih besar */
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Mengatur agar card detail lebih besar dan fleksibel */
+.detail-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row; /* Mengatur agar gambar dan info tampil berdampingan */
+  gap: 40px; /* Jarak antara gambar dan info */
+  margin-top: 30px;
+  flex-wrap: wrap; /* Agar tampilan tetap responsif */
+}
+
+/* Menambahkan ukuran gambar lebih besar */
+.detail-image {
+  width: 500px; /* Ukuran gambar lebih besar */
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover; /* Agar gambar tetap terpotong dengan baik jika ukuran gambar berbeda */
+  margin-bottom: 20px;
+}
+
+/* Mengubah ukuran judul dan teks informasi */
+.detail-info h3 {
+  font-size: 28px; /* Lebih besar untuk judul */
+  margin-bottom: 15px;
+}
+
+.detail-info p {
+  font-size: 20px; /* Ukuran teks lebih besar */
+  margin: 10px 0;
+}
+
+/* Tombol kembali lebih besar */
+.back-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsif: menyesuaikan ukuran di perangkat kecil */
+@media (max-width: 768px) {
+  .detail-card {
+    flex-direction: column; /* Gambar dan informasi tampil di atas-bawah */
+    align-items: center; /* Menyelaraskan konten di tengah */
+  }
+
+  .detail-image {
+    width: 100%; /* Gambar mengikuti lebar layar */
+    max-width: 600px; /* Maksimal ukuran gambar */
+  }
+
+  .detail-info h3 {
+    font-size: 24px; /* Ukuran teks lebih kecil untuk layar kecil */
+  }
+
+  .detail-info p {
+    font-size: 18px; /* Ukuran teks lebih kecil untuk layar kecil */
+  }
+
+  .back-button {
+    font-size: 16px; /* Ukuran tombol sedikit lebih kecil */
+  }
+}
