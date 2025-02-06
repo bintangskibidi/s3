@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../utils/base_url";
 import "../style/register.css";
-// import { div } from "framer-motion/client";
+
+// Import komponen-komponen MUI
+import { TextField, Button, Container, Typography, Box } from "@mui/material";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -47,51 +49,58 @@ export default function Register() {
   };
 
   return (
-  <div className="backround">
-    <div className="body1 md:text-base lg:h-100vh sm:text-sm">
-      <div className="container1">
-        <h3>Registrasi</h3>
-        <form onSubmit={register} method="POST">
-          <label htmlFor="username">Username</label>
-          <br />
-          <input
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            type="text"
-            placeholder="Masukkan username"
-          />
-          <br />
-          <label htmlFor="email">Email</label>
-          <br />
-          <input
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            type="email"
-            placeholder="Masukkan email"
-          />
-          <br />
-          <label htmlFor="password">Password</label>
-          <br />
-          <input
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            type="password"
-            placeholder="Masukkan password"
-          />
-          <br />
-          <button type="submit">Register</button>
-          <p>
-            Sudah punya akun? <a href="/login">Login</a>
-          </p>
-        </form>
+    <div className="background">
+      <div className="body1 md:text-base lg:h-100vh sm:text-sm">
+        <Container maxWidth="xs">
+          <Box sx={{ textAlign: "center", marginTop: 5 }}>
+            <Typography variant="h5">Registrasi</Typography>
+            <form onSubmit={register}>
+              <TextField
+                label="Username"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              <TextField
+                label="Email"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <TextField
+                label="Password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ marginTop: 2 }}
+              >
+                Register
+              </Button>
+            </form>
+            <Typography variant="body2" sx={{ marginTop: 2 }}>
+              Sudah punya akun? <a href="/login">Login</a>
+            </Typography>
+          </Box>
+        </Container>
       </div>
     </div>
- </div>
   );
 }

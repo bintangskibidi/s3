@@ -1,27 +1,36 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom"; // Menggunakan useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import { API_DUMMY } from "../utils/base_url";
-import Swal from "sweetalert2"; // Import SweetAlert2
+import Swal from "sweetalert2";
 import "../style/edit.css";
 
 function Edit() {
-  const { id } = useParams(); // Mengambil ID dari URL
+  const { id } = useParams();
   const [makanan, setMakanan] = useState({
     name: "",
     price: "",
     type: "",
-    imageUrl: "", // Menambahkan field imageUrl
+    imageUrl: "",
+    description: "",
+    stock: 0, // Mengatur default stok ke 0 (bukan undefined)
   });
-  const navigate = useNavigate(); // Menggunakan useNavigate untuk navigasi
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Request data berdasarkan ID
     axios
       .get(`${API_DUMMY}/api/menus/${id}`)
       .then((res) => {
-        setMakanan(res.data);
+        // Pastikan tidak ada field yang undefined
+        setMakanan({
+          name: res.data.name || "",
+          price: res.data.price || "",
+          type: res.data.type || "",
+          imageUrl: res.data.imageUrl || "",
+          description: res.data.description || "",
+          stock: res.data.stock || 0, // Pastikan stok adalah angka 0 jika tidak ada
+        });
       })
       .catch((error) => {
         alert("Terjadi kesalahan: " + error);
@@ -30,15 +39,24 @@ function Edit() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Log perubahan stok
+    if (name === "stock") {
+      console.log("Stok yang baru diubah:", value);
+    }
+
     setMakanan((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "stock" ? Number(value) : value, // Mengonversi stok menjadi angka
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Menambahkan pop-up konfirmasi dengan SweetAlert2
+
+    // Log data yang akan disubmit
+    console.log("Data yang akan disubmit:", makanan);
+
     Swal.fire({
       title: 'Apakah Anda yakin?',
       text: 'Perubahan yang Anda buat akan disimpan.',
@@ -49,19 +67,20 @@ function Edit() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(`${API_DUMMY}/api/menus/${id}`, makanan)
-          .then(() => {
-            // Success popup
+          .put(`${API_DUMMY}/api/menus/${id}`, makanan) // Mengirim data yang sudah diperbarui
+          .then((res) => {
+            // Log respons dari API
+            console.log("Response setelah update:", res.data);
+
             Swal.fire({
               icon: 'success',
               title: 'Berhasil!',
               text: 'Data telah berhasil diperbarui.',
             }).then(() => {
-              navigate("/menu"); // Menggunakan navigate untuk kembali ke halaman utama setelah sukses
+              navigate("/menu");
             });
           })
           .catch((error) => {
-            // Error popup
             Swal.fire({
               icon: 'error',
               title: 'Terjadi kesalahan!',
@@ -102,7 +121,7 @@ function Edit() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="type" className="form-label">Type</label>
+          <label htmlFor="type" className="form-label">Tipe</label>
           <input
             type="text"
             id="type"
@@ -113,7 +132,6 @@ function Edit() {
             required
           />
         </div>
-        {/* Input untuk URL gambar */}
         <div className="form-group">
           <label htmlFor="imageUrl" className="form-label">Link Gambar</label>
           <input
@@ -127,7 +145,33 @@ function Edit() {
           />
         </div>
 
-        {/* Menampilkan gambar yang sudah diinput */}
+        <div className="form-group">
+          <label htmlFor="description" className="form-label">Deskripsi</label>
+          <textarea
+            id="description"
+            name="description"
+            className="form-input"
+            value={makanan.description}
+            onChange={handleChange}
+            placeholder="Masukkan deskripsi makanan"
+            rows="4"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="stock" className="form-label">Stok</label>
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            className="form-input"
+            value={makanan.stock}
+            onChange={handleChange}
+            min="0"
+            required
+          />
+        </div>
+
         {makanan.imageUrl && (
           <div className="image-preview">
             <p>Gambar saat ini:</p>

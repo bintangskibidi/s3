@@ -1,160 +1,174 @@
-/* Container utama */
+/* barang.css */
+
+/* Container untuk seluruh halaman */
 .data-container {
-  max-width: 1200px; /* Membuat container lebih lebar */
-  margin: 30px auto;
-  padding: 20px;
-  background-color: #fdfdfd;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px; /* Lebih lebar dari sebelumnya */
+  background-color: #ffffff;
+  min-height: 100vh;
+  width: 90%; /* Lebih lebar */
+  margin: 0 auto; /* Center-kan konten */
+  box-shadow: 0 1px 50px rgba(0, 0, 0, 0.15);  
 }
 
-/* Tabel data */
-.data-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-  text-align: left;
-  background-color: #fff;
-  font-size: 18px; /* Meningkatkan ukuran font untuk kesan lebih besar */
+/* Styling untuk filter dan pencarian */
+.filter-menu,
+.search-container {
+  margin-bottom: 20px;
 }
 
-.data-table th,
-.data-table td {
-  padding: 20px 25px; /* Meningkatkan padding untuk ruang lebih */
+.filter-select,
+.search-input {
+  padding: 12px; /* Ukuran padding lebih besar */
+  font-size: 16px; /* Ukuran font lebih besar */
   border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 300px; /* Lebar lebih besar */
 }
 
-.data-table th {
-  background-color: #f8f9fa;
-  color: #333;
-  font-weight: bold;
+.search-container {
+  display: flex;
+  justify-content: flex-start;
 }
 
-.data-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* Menggunakan warna latar belakang yang lebih terang */
+.search-input {
+  width: 350px; /* Lebar input lebih besar */
 }
 
-.data-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Tombol tambah data */
 .btn-add {
   display: inline-block;
-  padding: 12px 20px;
-  margin-bottom: 30px; /* Menambah jarak bawah tombol */
-  font-size: 18px; /* Menambah ukuran font */
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
   background-color: #28a745;
+  color: white;
+  padding: 12px 25px;
   border-radius: 5px;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  font-size: 18px;
+  margin-bottom: 30px;
 }
 
 .btn-add:hover {
   background-color: #218838;
 }
 
-/* Filter menu */
-.filter-menu {
-  margin-bottom: 30px;
-  text-align: center;
+/* Styling untuk tabel */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.filter-menu button {
-  margin: 0 15px;
-  padding: 12px 25px; /* Meningkatkan padding untuk tombol filter */
-  font-size: 16px; /* Menambah ukuran font tombol filter */
-  font-weight: bold;
-  color: #007bff;
-  background-color: #fff;
-  border: 2px solid #007bff;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.data-table th,
+.data-table td {
+  padding: 15px; /* Padding lebih besar */
+  text-align: left;
+  font-size: 16px; /* Ukuran font lebih besar */
 }
 
-.filter-menu button.active,
-.filter-menu button:hover {
+.data-table th {
   background-color: #007bff;
-  color: #fff;
+  color: white;
 }
 
-/* Tombol aksi */
+.data-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
 .action-buttons {
   display: flex;
-  gap: 15px;
-  justify-content: center;
+  gap: 15px; /* Lebih lebar jaraknya */
 }
 
-.action-buttons a,
-.action-buttons button {
-  padding: 8px 15px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
+/* Styling untuk tombol aksi */
+.btn-edit,
+.btn-detail,
+.btn-delete,
+.btn-purchase {
+  padding: 8px 15px; /* Lebih besar padding */
+  font-size: 16px; /* Ukuran font lebih besar */
+  border: none;
   border-radius: 5px;
-  text-decoration: none;
-  transition: all 0.3s ease;
   cursor: pointer;
 }
 
+/* Tombol Edit */
 .btn-edit {
   background-color: #ffc107;
-  color: #212529;
-  border: 1px solid #ffc107;
+  color: white;
 }
 
 .btn-edit:hover {
   background-color: #e0a800;
-  color: #fff;
 }
 
+/* Tombol Hapus */
 .btn-delete {
   background-color: #dc3545;
-  color: #fff;
-  border: 1px solid #dc3545;
+  color: white;
 }
 
 .btn-delete:hover {
   background-color: #c82333;
 }
 
+/* Tombol Detail */
 .btn-detail {
-  background-color: #17a2b8;
-  color: #fff;
-  border: 1px solid #17a2b8;
+  background-color: #007bff;
+  color: white;
 }
 
 .btn-detail:hover {
-  background-color: #138496;
+  background-color: #0069d9;
 }
 
-.filter-menu {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
+/* Tombol Pembelian */
+.btn-purchase {
+  background-color: #28a745;
+  color: white;
 }
 
-.filter-select {
-  padding: 12px 25px;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  background-color: #f8f9fa;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  width: 200px;
+.btn-purchase:hover {
+  background-color: #218838;
 }
 
-.filter-select:focus {
+/* Input untuk jumlah pembelian */
+.purchase-input {
+  width: 80px; /* Lebih lebar */
+  padding: 8px;
+  font-size: 16px;
+  margin-right: 15px; /* Jarak lebih besar */
+}
+
+.purchase-input:focus {
   outline: none;
   border-color: #007bff;
 }
 
-.filter-select option {
-  padding: 10px;
-}
+/* Responsif untuk perangkat mobile */
+@media (max-width: 768px) {
+  .data-container {
+    width: 100%; /* Lebar penuh pada perangkat kecil */
+    padding: 20px;
+  }
 
+  .search-input,
+  .filter-select {
+    width: 100%; /* Lebar penuh untuk filter dan input pencarian */
+  }
+
+  .btn-add {
+    width: 100%;
+    text-align: center;
+  }
+
+  .data-table th, .data-table td {
+    font-size: 14px; /* Mengurangi font di perangkat kecil */
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    margin-bottom: 10px;
+  }
+}
+  

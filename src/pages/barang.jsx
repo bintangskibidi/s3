@@ -1,22 +1,24 @@
-import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
+import axios from "axios";
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, MenuItem, Select, FormControl, InputLabel, Container, Grid, Paper } from "@mui/material";
+import Swal from "sweetalert2";
 import { API_DUMMY } from "../utils/base_url";
-import Swal from "sweetalert2"; // Import SweetAlert2
 import "../style/barang.css";
 
 function Data() {
-  const [menus, setMenus] = useState([]); // Semua data
-  const [filteredMenus, setFilteredMenus] = useState([]); // Data yang difilter
-  const [filter, setFilter] = useState("all"); // Filter aktif (default: semua)
+  const [menus, setMenus] = useState([]);
+  const [filteredMenus, setFilteredMenus] = useState([]);
+  const [filter, setFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [purchaseQuantities, setPurchaseQuantities] = useState({});
 
   const getAll = () => {
     axios
       .get(`${API_DUMMY}/api/menus`)
       .then((res) => {
         setMenus(res.data);
-        setFilteredMenus(res.data); // Set default filter ke semua
+        setFilteredMenus(res.data);
       })
       .catch((error) => {
         alert("Terjadi kesalahan: " + error);
@@ -24,7 +26,6 @@ function Data() {
   };
 
   const deleteUser = async (id) => {
-    // SweetAlert2 confirmation popup
     Swal.fire({
       title: 'Apakah Anda yakin?',
       text: 'Data yang dihapus tidak dapat dikembalikan.',
@@ -37,7 +38,7 @@ function Data() {
         axios
           .delete(`${API_DUMMY}/api/menus/${id}`)
           .then(() => {
-            getAll(); // Refresh data tanpa reload halaman
+            getAll();
             Swal.fire({
               icon: 'success',
               title: 'Data berhasil dihapus!',
@@ -60,10 +61,61 @@ function Data() {
     const type = event.target.value;
     setFilter(type);
     if (type === "all") {
-      setFilteredMenus(menus); // Tampilkan semua
+      setFilteredMenus(menus);
     } else {
       setFilteredMenus(menus.filter((menu) => menu.type.toLowerCase() === type));
     }
+  };
+
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    setSearchTerm(query);
+    const filtered = menus.filter(
+      (menu) =>
+        menu.name.toLowerCase().includes(query.toLowerCase()) &&
+        (filter === "all" || menu.type.toLowerCase() === filter)
+    );
+    setFilteredMenus(filtered);
+  };
+
+  const handlePurchase = (menuId) => {
+    const quantity = purchaseQuantities[menuId];
+    if (quantity <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Jumlah tidak valid!',
+        text: 'Jumlah pembelian harus lebih dari 0.',
+      });
+      return;
+    }
+
+    axios
+      .post(`${API_DUMMY}/api/menus/purchase/${menuId}`, null, {
+        params: { quantity },
+      })
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Pembelian berhasil!',
+          text: 'Menu telah dibeli.',
+        });
+        getAll();
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Terjadi kesalahan!',
+          text: 'Gagal melakukan pembelian. Stok tidak cukup atau terjadi kesalahan.',
+        });
+        console.error("Error during purchase:", error);
+      });
+  };
+
+  const handleQuantityChange = (menuId, value) => {
+    setPurchaseQuantities({
+      ...purchaseQuantities,
+      [menuId]: value,
+    });
   };
 
   useEffect(() => {
@@ -71,59 +123,102 @@ function Data() {
   }, []);
 
   return (
-    <div className="data-container">
-      <div className="filter-menu">
-        <select
-          value={filter}
-          onChange={handleFilterChange}
-          className="filter-select"
-        >
-          <option value="all">Semua</option>
-          <option value="makanan">Makanan</option>
-          <option value="minuman">Minuman</option>
-        </select>
-      </div>
+    <Container>
+      <Grid container spacing={2} sx={{ marginBottom: 2 }}>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <InputLabel id="filter-select-label">Tipe</InputLabel>
+            <Select
+              labelId="filter-select-label"
+              value={filter}
+              onChange={handleFilterChange}
+            >
+              <MenuItem value="all">Semua</MenuItem>
+              <MenuItem value="makanan">Makanan</MenuItem>
+              <MenuItem value="minuman">Minuman</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            fullWidth
+            label="Cari berdasarkan nama..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </Grid>
+      </Grid>
 
-      <a className="btn-add" href="/tambah">
+      <Button variant="contained" color="primary" href="/tambah">
         Tambah Data
-      </a>
+      </Button>
 
-      <Table striped bordered hover className="data-table">
-        <thead>
-          <tr>
-            <th style={{ width: "20px" }}>No</th>
-            <th>Nama</th>
-            <th>Harga</th>
-            <th>Tipe</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredMenus.map((row, index) => (
-            <tr key={row.id}>
-              <td>{index + 1}</td>
-              <td>{row.name}</td>
-              <td>{row.price}</td>
-              <td>{row.type}</td>
-              <td className="action-buttons">
-                <a href={`/edit/${row.id}`} className="btn-edit">
-                  Edit
-                </a>
-                <button
-                  className="btn-delete"
-                  onClick={() => deleteUser(row.id)}
-                >
-                  Hapus
-                </button>
-                <a href={`/detail/${row.id}`} className="btn-detail">
-                  Detail
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>No</TableCell>
+              <TableCell>Nama</TableCell>
+              <TableCell>Harga</TableCell>
+              <TableCell>Tipe</TableCell>
+              <TableCell>Aksi</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredMenus.map((row, index) => (
+              <TableRow key={row.id}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{row.price}</TableCell>
+                <TableCell>{row.type}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    href={`/edit/${row.id}`}
+                    sx={{ marginRight: 1 }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => deleteUser(row.id)}
+                    sx={{ marginRight: 1 }}
+                  >
+                    Hapus
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="info"
+                    href={`/detail/${row.id}`}
+                    sx={{ marginRight: 1 }}
+                  >
+                    Detail
+                  </Button>
+
+                  <TextField
+                    type="number"
+                    label="Jumlah"
+                    value={purchaseQuantities[row.id] || 0}
+                    onChange={(e) => handleQuantityChange(row.id, e.target.value)}
+                    InputProps={{ inputProps: { min: 1 } }}
+                    sx={{ width: 80, marginRight: 1 }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handlePurchase(row.id)}
+                  >
+                    Beli
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
 

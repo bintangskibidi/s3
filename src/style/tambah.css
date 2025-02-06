@@ -1,69 +1,47 @@
-/* Container utama untuk form */
+/* tambah.css */
 .form-container {
-  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Judul form */
-.form-container h2 {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
+form {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Setiap label dalam form */
-.form-container label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #555;
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-/* Input fields dalam form */
-.form-container input {
-  width: 100%;
-  padding: 10px;
+input, textarea {
+  padding: 8px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #333;
-  transition: border-color 0.3s ease;
+  border-radius: 5px;
 }
 
-/* Efek focus pada input */
-.form-container input:focus {
-  border-color: #3498db;
-  outline: none;
-}
-
-/* Tombol submit */
-.form-container button {
+input[type="number"] {
   width: 100%;
-  padding: 12px;
-  background-color: #3498db;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  padding: 10px;
+  background-color: #4caf50;
   color: white;
-  font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-/* Efek hover pada tombol */
-.form-container button:hover {
-  background-color: #2980b9;
-}
-
-/* Responsif: mengubah lebar form pada perangkat kecil */
-@media (max-width: 768px) {
-  .form-container {
-    padding: 15px;
-  }
+button:hover {
+  background-color: #45a049;
 }

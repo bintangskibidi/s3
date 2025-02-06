@@ -13,7 +13,9 @@ function Tambah() {
     name: "",
     price: "",
     type: "",
+    description: "", // Menambahkan field deskripsi
     link_gambar: "", // Properti untuk link gambar
+    stock: "", // Menambahkan field stok
   });
   const [file, setFile] = useState(null); // State untuk file gambar
 
@@ -87,10 +89,31 @@ function Tambah() {
 
         <label>Type:</label>
         <input
-          type="select"
+          type="text"
           name="type"
           value={formData.type}
           onChange={handleChange}
+          required
+        />
+
+        {/* Field Deskripsi */}
+        <label>Deskripsi:</label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          placeholder="Masukkan deskripsi menu"
+          required
+        ></textarea>
+
+        {/* Field Stok */}
+        <label>Stok:</label>
+        <input
+          type="number"
+          name="stock"
+          value={formData.stock}
+          onChange={handleChange}
+          min="0"
           required
         />
 

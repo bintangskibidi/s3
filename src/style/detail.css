@@ -1,60 +1,57 @@
+/* detail.css */
 .detail-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px auto;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 20px;
-  max-width: 600px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  margin-bottom: 20px;
-  color: #333;
-  font-family: 'Arial', sans-serif;
+  background-color: #fff;
 }
 
 .detail-card {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
+  gap: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
   border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .detail-image {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .detail-info {
-  text-align: center;
+  flex: 1;
 }
 
-.detail-info h3,
+.detail-info h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
 .detail-info p {
-  margin: 5px 0;
+  font-size: 18px;
+  margin: 10px 0;
   color: #555;
-  font-family: 'Arial', sans-serif;
 }
 
 .back-button {
-  margin-top: 20px;
-  padding: 10px 20px;
   background-color: #007bff;
   color: white;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  font-family: 'Arial', sans-serif;
-  transition: background-color 0.3s ease;
 }
 
 .back-button:hover {
   background-color: #0056b3;
+}
+
+.detail-info strong {
+  color: #333;
 }

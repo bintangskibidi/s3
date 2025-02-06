@@ -3,7 +3,7 @@ export const uploadImageToS3 = async (file) => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("https://is3.cloudhost.id/binus", {
+      const response = await fetch("https://s3.lynk2.co/api/s3/test", {
         method: "POST",
         body: formData,
       });

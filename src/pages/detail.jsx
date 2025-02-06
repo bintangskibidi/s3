@@ -18,11 +18,11 @@ function Detail() {
   }, [id]); 
 
   const handleBack = () => {
-    navigate(-1);
+    navigate(-1); // Navigasi kembali ke halaman sebelumnya
   };
 
   if (!data) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>; // Tampilkan loading jika data belum tersedia
   }
 
   return (
@@ -31,16 +31,18 @@ function Detail() {
       <div className="detail-card">
         {/* Gambar menu */}
         <img
-          src={data.link_gambar || "/images/placeholder.jpg"} 
-          alt={data.name} 
+          src={data.link_gambar || "/images/placeholder.jpg"} // Gunakan gambar placeholder jika tidak ada link gambar
+          alt={data.name}
           className="detail-image"
-          onError={(e) => (e.target.src = "/images/placeholder.jpg")}
+          onError={(e) => (e.target.src = "/images/placeholder.jpg")} // Jika gambar gagal, ganti dengan placeholder
         />
         <div className="detail-info">
           {/* Informasi menu */}
           <h3>Nama: {data.name}</h3>
           <p>Harga: {data.price} IDR</p>
           <p>Tipe: {data.type}</p>
+          <p><strong>Deskripsi:</strong> {data.description}</p> {/* Menambahkan deskripsi */}
+          <p><strong>Stok:</strong> {data.stock} unit</p> {/* Menambahkan stok */}
         </div>
       </div>
       {/* Tombol kembali */}
