@@ -1,191 +1,120 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
+import { Button, TextField, Container, Grid, Paper, MenuItem, FormControl, InputLabel, Select } from "@mui/material";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
 import { API_DUMMY } from "../utils/base_url";
 import Swal from "sweetalert2";
-import "../style/edit.css";
+import { useParams, useNavigate } from "react-router-dom"; // Ganti useHistory dengan useNavigate
 
 function Edit() {
   const { id } = useParams();
-  const [makanan, setMakanan] = useState({
-    name: "",
-    price: "",
-    type: "",
-    imageUrl: "",
-    description: "",
-    stock: 0, // Mengatur default stok ke 0 (bukan undefined)
-  });
-  const navigate = useNavigate();
+  const [menu, setMenu] = useState(null);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [type, setType] = useState("makanan");
+  const [description, setDescription] = useState(""); // Menambahkan state untuk deskripsi
+  
+  const navigate = useNavigate(); // Ganti useHistory dengan useNavigate
 
   useEffect(() => {
     axios
       .get(`${API_DUMMY}/api/menus/${id}`)
       .then((res) => {
-        // Pastikan tidak ada field yang undefined
-        setMakanan({
-          name: res.data.name || "",
-          price: res.data.price || "",
-          type: res.data.type || "",
-          imageUrl: res.data.imageUrl || "",
-          description: res.data.description || "",
-          stock: res.data.stock || 0, // Pastikan stok adalah angka 0 jika tidak ada
-        });
+        const { name, price, type, description } = res.data;
+        setMenu(res.data);
+        setName(name);
+        setPrice(price);
+        setType(type);
+        setDescription(description); // Menampilkan deskripsi menu
       })
-      .catch((error) => {
-        alert("Terjadi kesalahan: " + error);
+      .catch(() => {
+        console.error("Error fetching menu");
       });
   }, [id]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Log perubahan stok
-    if (name === "stock") {
-      console.log("Stok yang baru diubah:", value);
-    }
-
-    setMakanan((prev) => ({
-      ...prev,
-      [name]: name === "stock" ? Number(value) : value, // Mengonversi stok menjadi angka
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Log data yang akan disubmit
-    console.log("Data yang akan disubmit:", makanan);
-
-    Swal.fire({
-      title: 'Apakah Anda yakin?',
-      text: 'Perubahan yang Anda buat akan disimpan.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Ya, Simpan!',
-      cancelButtonText: 'Batal',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`${API_DUMMY}/api/menus/${id}`, makanan) // Mengirim data yang sudah diperbarui
-          .then((res) => {
-            // Log respons dari API
-            console.log("Response setelah update:", res.data);
-
-            Swal.fire({
-              icon: 'success',
-              title: 'Berhasil!',
-              text: 'Data telah berhasil diperbarui.',
-            }).then(() => {
-              navigate("/menu");
-            });
-          })
-          .catch((error) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Terjadi kesalahan!',
-              text: 'Gagal menyimpan perubahan.',
-            });
-            console.error(error);
-          });
-      }
-    });
+    const updatedMenu = { name, price, type, description }; // Menambahkan deskripsi
+    try {
+      await axios.put(`${API_DUMMY}/api/menus/${id}`, updatedMenu);
+      Swal.fire({
+        icon: "success",
+        title: "Data berhasil diperbarui!",
+        text: "Menu telah diperbarui.",
+      }).then(() => {
+        navigate("/menu"); // Redirect menggunakan navigate, bukan history.push
+      });
+    } catch (error) {
+      console.error("Error while updating menu:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Terjadi kesalahan!",
+        text: "Gagal memperbarui data.",
+      });
+    }
   };
+
+  if (!menu) return <div>Loading...</div>;
 
   return (
-    <div className="edit-container">
-      <h2 className="edit-title">Edit Makanan</h2>
-      <form className="edit-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name" className="form-label">Nama</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="form-input"
-            value={makanan.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="price" className="form-label">Harga</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            className="form-input"
-            value={makanan.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="type" className="form-label">Tipe</label>
-          <input
-            type="text"
-            id="type"
-            name="type"
-            className="form-input"
-            value={makanan.type}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="imageUrl" className="form-label">Link Gambar</label>
-          <input
-            type="url"
-            id="imageUrl"
-            name="imageUrl"
-            className="form-input"
-            value={makanan.imageUrl}
-            onChange={handleChange}
-            placeholder="Masukkan URL gambar"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="description" className="form-label">Deskripsi</label>
-          <textarea
-            id="description"
-            name="description"
-            className="form-input"
-            value={makanan.description}
-            onChange={handleChange}
-            placeholder="Masukkan deskripsi makanan"
-            rows="4"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="stock" className="form-label">Stok</label>
-          <input
-            type="number"
-            id="stock"
-            name="stock"
-            className="form-input"
-            value={makanan.stock}
-            onChange={handleChange}
-            min="0"
-            required
-          />
-        </div>
-
-        {makanan.imageUrl && (
-          <div className="image-preview">
-            <p>Gambar saat ini:</p>
-            <img
-              src={makanan.imageUrl}
-              alt="Current"
-              className="image-preview-img"
-            />
-          </div>
-        )}
-
-        <button type="submit" className="form-button">Simpan</button>
-      </form>
-    </div>
+    <Container>
+      <Paper sx={{ padding: 3, marginTop: 2 }}>
+        <h2>Edit Menu</h2>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Nama Menu"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Harga"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                type="number"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth required>
+                <InputLabel>Tipe</InputLabel>
+                <Select
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  label="Tipe"
+                >
+                  <MenuItem value="makanan">Makanan</MenuItem>
+                  <MenuItem value="minuman">Minuman</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            {/* Input Deskripsi */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Deskripsi"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+                multiline
+                rows={4} // Memperbesar area input deskripsi
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Simpan Perubahan
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

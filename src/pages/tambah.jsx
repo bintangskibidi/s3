@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import { Button, TextField, Container, Grid, Paper, Typography, Box } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_DUMMY } from "../utils/base_url";
 import Swal from "sweetalert2"; // Import SweetAlert2
-import "../style/tambah.css";
 import { uploadImageToS3 } from "../utils/Uploadtos3";
 
 function Tambah() {
@@ -66,68 +66,106 @@ function Tambah() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Tambah Data</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Nama:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
+    <Container maxWidth="sm">
+      <Paper sx={{ padding: 3, marginTop: 3 }}>
+        <Typography variant="h5" align="center" gutterBottom>
+          Tambah Menu Baru
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            {/* Nama */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Nama Menu"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                variant="outlined"
+              />
+            </Grid>
 
-        <label>Harga:</label>
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          required
-        />
+            {/* Harga */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Harga"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                required
+                type="number"
+                variant="outlined"
+              />
+            </Grid>
 
-        <label>Type:</label>
-        <input
-          type="text"
-          name="type"
-          value={formData.type}
-          onChange={handleChange}
-          required
-        />
+            {/* Tipe */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Tipe Menu"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                required
+                variant="outlined"
+              />
+            </Grid>
 
-        {/* Field Deskripsi */}
-        <label>Deskripsi:</label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Masukkan deskripsi menu"
-          required
-        ></textarea>
+            {/* Deskripsi */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Deskripsi"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Masukkan deskripsi menu"
+                required
+                multiline
+                rows={4}
+                variant="outlined"
+              />
+            </Grid>
 
-        {/* Field Stok */}
-        <label>Stok:</label>
-        <input
-          type="number"
-          name="stock"
-          value={formData.stock}
-          onChange={handleChange}
-          min="0"
-          required
-        />
+            {/* Stok */}
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Stok"
+                name="stock"
+                value={formData.stock}
+                onChange={handleChange}
+                required
+                type="number"
+                variant="outlined"
+                inputProps={{ min: "0" }}
+              />
+            </Grid>
 
-        <label>Unggah Gambar:</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="form-control"
-        />
+            {/* Unggah Gambar */}
+            <Grid item xs={12}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="form-control"
+              />
+            </Grid>
 
-        <button type="submit">Tambah</button>
-      </form>
-    </div>
+            {/* Tombol Submit */}
+            <Grid item xs={12}>
+              <Box sx={{ textAlign: "center", marginTop: 2 }}>
+                <Button type="submit" variant="contained" color="primary">
+                  Tambah Menu
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
+    </Container>
   );
 }
 

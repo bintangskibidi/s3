@@ -1,10 +1,25 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, MenuItem, Select, FormControl, InputLabel, Container, Grid, Paper } from "@mui/material";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Container,
+  Grid,
+  Paper,
+} from "@mui/material";
 import Swal from "sweetalert2";
 import { API_DUMMY } from "../utils/base_url";
-import "../style/barang.css";
 
 function Data() {
   const [menus, setMenus] = useState([]);
@@ -132,10 +147,17 @@ function Data() {
               labelId="filter-select-label"
               value={filter}
               onChange={handleFilterChange}
+              sx={{ backgroundColor: "#f4f4f4", borderRadius: "8px" }}
             >
-              <MenuItem value="all">Semua</MenuItem>
-              <MenuItem value="makanan">Makanan</MenuItem>
-              <MenuItem value="minuman">Minuman</MenuItem>
+              <MenuItem value="all" sx={{ backgroundColor: "#f4f4f4" }}>
+                Semua
+              </MenuItem>
+              <MenuItem value="makanan" sx={{ backgroundColor: "#f4f4f4" }}>
+                Makanan
+              </MenuItem>
+              <MenuItem value="minuman" sx={{ backgroundColor: "#f4f4f4" }}>
+                Minuman
+              </MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -145,23 +167,33 @@ function Data() {
             label="Cari berdasarkan nama..."
             value={searchTerm}
             onChange={handleSearchChange}
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: "8px",
+              borderColor: "#3f51b5",
+            }}
           />
         </Grid>
       </Grid>
 
-      <Button variant="contained" color="primary" href="/tambah">
+      <Button
+        variant="contained"
+        color="primary"
+        href="/tambah"
+        sx={{ marginBottom: 2, backgroundColor: "#4caf50" }}
+      >
         Tambah Data
       </Button>
 
-      <TableContainer component={Paper} sx={{ marginTop: 2 }}>
+      <TableContainer component={Paper} sx={{ marginTop: 2, boxShadow: 3 }}>
         <Table>
-          <TableHead>
+          <TableHead sx={{ backgroundColor: "#1976d2" }}>
             <TableRow>
-              <TableCell>No</TableCell>
-              <TableCell>Nama</TableCell>
-              <TableCell>Harga</TableCell>
-              <TableCell>Tipe</TableCell>
-              <TableCell>Aksi</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>No</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Nama</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Harga</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Tipe</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>Aksi</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -176,7 +208,11 @@ function Data() {
                     variant="outlined"
                     color="primary"
                     href={`/edit/${row.id}`}
-                    sx={{ marginRight: 1 }}
+                    sx={{
+                      marginRight: 1,
+                      backgroundColor: "#ff9800",
+                      color: "#fff",
+                    }}
                   >
                     Edit
                   </Button>
@@ -184,7 +220,11 @@ function Data() {
                     variant="outlined"
                     color="error"
                     onClick={() => deleteUser(row.id)}
-                    sx={{ marginRight: 1 }}
+                    sx={{
+                      marginRight: 1,
+                      backgroundColor: "#f44336",
+                      color: "#fff",
+                    }}
                   >
                     Hapus
                   </Button>
@@ -192,7 +232,11 @@ function Data() {
                     variant="outlined"
                     color="info"
                     href={`/detail/${row.id}`}
-                    sx={{ marginRight: 1 }}
+                    sx={{
+                      marginRight: 1,
+                      backgroundColor: "#00bcd4",
+                      color: "#fff",
+                    }}
                   >
                     Detail
                   </Button>
@@ -203,12 +247,18 @@ function Data() {
                     value={purchaseQuantities[row.id] || 0}
                     onChange={(e) => handleQuantityChange(row.id, e.target.value)}
                     InputProps={{ inputProps: { min: 1 } }}
-                    sx={{ width: 80, marginRight: 1 }}
+                    sx={{
+                      width: 80,
+                      marginRight: 1,
+                      backgroundColor: "#e3f2fd",
+                      borderRadius: "4px",
+                    }}
                   />
                   <Button
                     variant="contained"
                     color="success"
                     onClick={() => handlePurchase(row.id)}
+                    sx={{ backgroundColor: "#388e3c" }}
                   >
                     Beli
                   </Button>
